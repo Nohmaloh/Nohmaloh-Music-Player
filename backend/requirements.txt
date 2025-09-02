@@ -1,0 +1,19 @@
+fastapi          # Modern Python web framework
+uvicorn            # ASGI server to run FastAPI
+sqlalchemy         # ORM for database operations
+mutagen            # Read audio file metadata (title, artist, duration)
+python-multipart    # For file uploads (future feature)
+python-dotenv       # Environment variable management
+
+# Focus processing dependencies
+librosa==0.11.0            # Audio analysis and processing
+soundfile          # Audio file I/O
+scipy              # Signal processing (filtering)
+pydub              # Audio format conversion
+spleeter            # AI-powered source separation
+tensorflow         # Required by Spleeter (pin version for stability)
+
+# Additional utilities
+numpy              # Numerical computing (used by librosa)
+pydantic            # Data validation for API
+aiofiles           # Async file operations

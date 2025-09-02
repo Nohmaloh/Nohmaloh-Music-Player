@@ -6,32 +6,221 @@
     <title>Focus Music Player</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
+        body {
+            background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 30%, #16213e 60%, #0f3460 85%, #000000 100%);
+            min-height: 100vh;
+            position: relative;
+        }
+        
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                radial-gradient(2px 2px at 20px 30px, #ffffff, transparent),
+                radial-gradient(2px 2px at 40px 70px, rgba(255,255,255,0.8), transparent),
+                radial-gradient(1px 1px at 90px 40px, #ffffff, transparent),
+                radial-gradient(1px 1px at 130px 80px, rgba(255,255,255,0.6), transparent),
+                radial-gradient(2px 2px at 160px 30px, #ffffff, transparent),
+                radial-gradient(1px 1px at 200px 90px, rgba(255,255,255,0.7), transparent),
+                radial-gradient(1px 1px at 250px 50px, #ffffff, transparent),
+                radial-gradient(2px 2px at 300px 20px, rgba(255,255,255,0.9), transparent),
+                radial-gradient(1px 1px at 350px 70px, #ffffff, transparent),
+                radial-gradient(1px 1px at 400px 40px, rgba(255,255,255,0.5), transparent),
+                radial-gradient(2px 2px at 450px 80px, #ffffff, transparent),
+                radial-gradient(1px 1px at 500px 30px, rgba(255,255,255,0.8), transparent),
+                radial-gradient(1px 1px at 550px 60px, #ffffff, transparent),
+                radial-gradient(2px 2px at 600px 10px, rgba(255,255,255,0.6), transparent),
+                radial-gradient(1px 1px at 650px 90px, #ffffff, transparent),
+                radial-gradient(1px 1px at 700px 50px, rgba(255,255,255,0.7), transparent),
+                radial-gradient(2px 2px at 750px 20px, #ffffff, transparent),
+                radial-gradient(1px 1px at 800px 80px, rgba(255,255,255,0.9), transparent),
+                radial-gradient(1px 1px at 850px 40px, #ffffff, transparent),
+                radial-gradient(2px 2px at 900px 70px, rgba(255,255,255,0.5), transparent);
+            background-repeat: repeat;
+            background-size: 200px 100px;
+            opacity: 0.4;
+            z-index: -1;
+            pointer-events: none;
+        }
+        
+        .space-gradient {
+            background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 30%, #16213e 60%, #0f3460 85%, #000000 100%);
+            position: relative;
+        }
+        
+        .space-gradient::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                radial-gradient(2px 2px at 20px 30px, #ffffff, transparent),
+                radial-gradient(2px 2px at 40px 70px, rgba(255,255,255,0.8), transparent),
+                radial-gradient(1px 1px at 90px 40px, #ffffff, transparent),
+                radial-gradient(1px 1px at 130px 80px, rgba(255,255,255,0.6), transparent),
+                radial-gradient(2px 2px at 160px 30px, #ffffff, transparent),
+                radial-gradient(1px 1px at 200px 90px, rgba(255,255,255,0.7), transparent),
+                radial-gradient(1px 1px at 250px 50px, #ffffff, transparent),
+                radial-gradient(2px 2px at 300px 20px, rgba(255,255,255,0.9), transparent),
+                radial-gradient(1px 1px at 350px 70px, #ffffff, transparent),
+                radial-gradient(1px 1px at 400px 40px, rgba(255,255,255,0.5), transparent),
+                radial-gradient(2px 2px at 450px 80px, #ffffff, transparent),
+                radial-gradient(1px 1px at 500px 30px, rgba(255,255,255,0.8), transparent),
+                radial-gradient(1px 1px at 550px 60px, #ffffff, transparent),
+                radial-gradient(2px 2px at 600px 10px, rgba(255,255,255,0.6), transparent),
+                radial-gradient(1px 1px at 650px 90px, #ffffff, transparent),
+                radial-gradient(1px 1px at 700px 50px, rgba(255,255,255,0.7), transparent),
+                radial-gradient(2px 2px at 750px 20px, #ffffff, transparent),
+                radial-gradient(1px 1px at 800px 80px, rgba(255,255,255,0.9), transparent),
+                radial-gradient(1px 1px at 850px 40px, #ffffff, transparent),
+                radial-gradient(2px 2px at 900px 70px, rgba(255,255,255,0.5), transparent);
+            background-repeat: repeat;
+            background-size: 200px 100px;
+            opacity: 0.3;
+            z-index: 0;
+            pointer-events: none;
+        }
+        
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+        
         .album-art {
-            background: linear-gradient(135deg, #3B82F6, #1D4ED8);
+            background: linear-gradient(135deg, #6366f1, #8b5cf6, #d946ef);
+            box-shadow: 0 25px 50px rgba(99, 102, 241, 0.2), 0 0 0 1px rgba(255, 255, 255, 0.1);
         }
+        
         .focus-button {
-            background: linear-gradient(135deg, #3B82F6, #1D4ED8);
-            transition: all 0.2s ease;
+            background: linear-gradient(135deg, #10b981, #059669);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 8px 25px rgba(16, 185, 129, 0.25), 0 0 0 1px rgba(255, 255, 255, 0.1);
+            border: none;
         }
+        
         .focus-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 25px rgba(59, 130, 246, 0.3);
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 15px 35px rgba(16, 185, 129, 0.35), 0 0 0 1px rgba(255, 255, 255, 0.15);
+            background: linear-gradient(135deg, #34d399, #10b981);
+        }
+        
+        .scan-button {
+            background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 6px 20px rgba(139, 92, 246, 0.25), 0 0 0 1px rgba(255, 255, 255, 0.1);
+            border: none;
+        }
+        
+        .scan-button:hover {
+            transform: translateY(-2px) scale(1.01);
+            box-shadow: 0 12px 30px rgba(139, 92, 246, 0.35), 0 0 0 1px rgba(255, 255, 255, 0.15);
+            background: linear-gradient(135deg, #a78bfa, #8b5cf6);
+        }
+        
+        .song-item {
+            background: rgba(255, 255, 255, 0.04);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .song-item:hover {
+            background: rgba(255, 255, 255, 0.08);
+            transform: translateY(-3px) scale(1.01);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.25), 0 0 0 1px rgba(255, 255, 255, 0.1);
+        }
+        
+        .text-white {
+            color: #ffffff !important;
+        }
+        
+        .text-gray-300 {
+            color: #d1d5db !important;
+        }
+        
+        .text-gray-400 {
+            color: #9ca3af !important;
+        }
+        
+        .text-gray-500 {
+            color: #6b7280 !important;
+        }
+        
+        .text-gray-600 {
+            color: #4b5563 !important;
+        }
+        
+        .text-gray-700 {
+            color: #374151 !important;
+        }
+        
+        .text-gray-800 {
+            color: #1f2937 !important;
+        }
+        
+        .text-gray-900 {
+            color: #111827 !important;
+        }
+        
+        /* Enhanced sleek styling */
+        .header-icon {
+            background: linear-gradient(135deg, #8b5cf6, #d946ef);
+            box-shadow: 0 8px 25px rgba(139, 92, 246, 0.3);
+        }
+        
+        .progress-bar-bg {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+        }
+        
+        .progress-bar-fill {
+            background: linear-gradient(90deg, #10b981, #34d399, #6ee7b7);
+            box-shadow: 0 0 20px rgba(16, 185, 129, 0.4);
+        }
+        
+        .control-button {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .control-button:hover {
+            background: rgba(255, 255, 255, 0.15);
+            transform: scale(1.05);
+        }
+        
+        /* Smooth scrolling */
+        * {
+            scroll-behavior: smooth;
+        }
+        
+        /* Enhanced focus states */
+        button:focus, input:focus, select:focus {
+            outline: 2px solid rgba(139, 92, 246, 0.5);
+            outline-offset: 2px;
         }
     </style>
 </head>
-<body class="bg-gray-100 min-h-screen">
+<body class="min-h-screen">
     <!-- Header -->
-    <header class="bg-white shadow-sm border-b border-gray-200 px-6 py-4">
+    <header class="glass-effect shadow-sm border-b border-gray-200 px-6 py-4">
         <div class="flex items-center justify-between">
             <div class="flex items-center space-x-3">
-                <div class="w-8 h-8 bg-blue-500 rounded-lg flex items-center justify-center">
+                <div class="w-8 h-8 header-icon rounded-lg flex items-center justify-center">
                     <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
                         <path fill-rule="evenodd" d="M9.383 3.076A1 1 0 0110 4v12a1 1 0 01-1.707.707L4.586 13H2a1 1 0 01-1-1V8a1 1 0 011-1h2.586l3.707-3.707a1 1 0 011.09-.217zM15.657 6.343a1 1 0 011.414 0A9.972 9.972 0 0119 12a9.972 9.972 0 01-1.929 5.657 1 1 0 11-1.414-1.414A7.971 7.971 0 0017 12a7.971 7.971 0 00-1.343-4.243 1 1 0 010-1.414z" clip-rule="evenodd"/>
                     </svg>
                 </div>
                 <div>
-                    <h1 class="text-xl font-bold text-gray-900">Focus Music Player</h1>
-                    <p class="text-sm text-gray-600">Transform your music for better focus</p>
+                    <h1 class="text-xl font-bold text-white">Nohmaloh</h1>
+                    <p class="text-sm text-gray-300">Transform your music for better focus</p>
                 </div>
             </div>
         </div>
@@ -40,10 +229,10 @@
     <!-- Main Content -->
     <main class="flex-1 flex overflow-hidden">
         <!-- Left Sidebar - Music Library -->
-        <div class="w-1/2 lg:w-2/5 xl:w-1/3 bg-white border-r border-gray-200 flex flex-col">
+        <div class="w-1/2 lg:w-2/5 xl:w-1/3 glass-effect border-r border-gray-200 flex flex-col">
             <div class="p-6 border-b border-gray-200">
-                <h2 class="text-lg font-semibold text-gray-900 mb-4">Your Music Library</h2>
-                <button class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg transition-colors">
+                <h2 class="text-lg font-semibold text-white mb-4">Your Music Library</h2>
+                <button class="w-full scan-button text-white font-semibold py-2 px-4 rounded-lg">
                     Scan Music Library
                 </button>
             </div>
@@ -51,28 +240,28 @@
             <div class="flex-1 overflow-y-auto p-6">
                 <!-- Sample songs -->
                 <div class="space-y-3">
-                    <div class="p-4 bg-gray-50 rounded-lg cursor-pointer hover:bg-gray-100 transition-colors" onclick="selectSong('colormein.mp3', 'Color Me In', 'Unknown Artist')">
-                        <h3 class="font-medium text-gray-900">Color Me In</h3>
-                        <p class="text-sm text-gray-600">Unknown Artist</p>
-                        <p class="text-xs text-gray-500">MP3 • 3:45</p>
+                    <div class="p-4 song-item rounded-lg cursor-pointer" onclick="selectSong('colormein.mp3', 'Color Me In', 'Unknown Artist')">
+                        <h3 class="font-medium text-white">Color Me In</h3>
+                        <p class="text-sm text-gray-300">Unknown Artist</p>
+                        <p class="text-xs text-gray-400">MP3 • 3:45</p>
                     </div>
                     
-                    <div class="p-4 bg-gray-50 rounded-lg cursor-pointer hover:bg-gray-100 transition-colors" onclick="selectSong('makeyoumine.mp3', 'Make You Mine', 'Unknown Artist')">
-                        <h3 class="font-medium text-gray-900">Make You Mine</h3>
-                        <p class="text-sm text-gray-600">Unknown Artist</p>
-                        <p class="text-xs text-gray-500">MP3 • 4:12</p>
+                    <div class="p-4 song-item rounded-lg cursor-pointer" onclick="selectSong('makeyoumine.mp3', 'Make You Mine', 'Unknown Artist')">
+                        <h3 class="font-medium text-white">Make You Mine</h3>
+                        <p class="text-sm text-gray-300">Unknown Artist</p>
+                        <p class="text-xs text-gray-400">MP3 • 4:12</p>
                     </div>
                     
-                    <div class="p-4 bg-gray-50 rounded-lg cursor-pointer hover:bg-gray-100 transition-colors" onclick="selectSong('stay.mp3', 'Stay', 'Unknown Artist')">
-                        <h3 class="font-medium text-gray-900">Stay</h3>
-                        <p class="text-sm text-gray-600">Unknown Artist</p>
-                        <p class="text-xs text-gray-500">MP3 • 2:58</p>
+                    <div class="p-4 song-item rounded-lg cursor-pointer" onclick="selectSong('stay.mp3', 'Stay', 'Unknown Artist')">
+                        <h3 class="font-medium text-white">Stay</h3>
+                        <p class="text-sm text-gray-300">Unknown Artist</p>
+                        <p class="text-xs text-gray-400">MP3 • 2:58</p>
                     </div>
                     
-                    <div class="p-4 bg-gray-50 rounded-lg cursor-pointer hover:bg-gray-100 transition-colors" onclick="selectSong('vivalavida.mp3', 'Viva La Vida', 'Coldplay')">
-                        <h3 class="font-medium text-gray-900">Viva La Vida</h3>
-                        <p class="text-sm text-gray-600">Coldplay</p>
-                        <p class="text-xs text-gray-500">MP3 • 4:01</p>
+                    <div class="p-4 song-item rounded-lg cursor-pointer" onclick="selectSong('vivalavida.mp3', 'Viva La Vida', 'Coldplay')">
+                        <h3 class="font-medium text-white">Viva La Vida</h3>
+                        <p class="text-sm text-gray-300">Coldplay</p>
+                        <p class="text-xs text-gray-400">MP3 • 4:01</p>
                     </div>
                 </div>
             </div>
@@ -80,14 +269,14 @@
 
         <!-- Right Panel - Player -->
         <div class="flex-1 flex flex-col">
-            <div class="flex-1 flex items-center justify-center bg-gradient-to-br from-gray-50 to-gray-100 p-8">
+            <div class="flex-1 flex items-center justify-center space-gradient p-8">
                 <div id="no-song-selected" class="text-center">
-                    <svg class="w-24 h-24 mx-auto mb-4 text-gray-300" fill="currentColor" viewBox="0 0 20 20">
+                    <svg class="w-24 h-24 mx-auto mb-4 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
                         <path fill-rule="evenodd" d="M9.383 3.076A1 1 0 0110 4v12a1 1 0 01-1.707.707L4.586 13H2a1 1 0 01-1-1V8a1 1 0 011-1h2.586l3.707-3.707a1 1 0 011.09-.217zM15.657 6.343a1 1 0 011.414 0A9.972 9.972 0 0119 12a9.972 9.972 0 01-1.929 5.657 1 1 0 11-1.414-1.414A7.971 7.971 0 0017 12a7.971 7.971 0 00-1.343-4.243 1 1 0 010-1.414z" clip-rule="evenodd"/>
                     </svg>
-                    <h2 class="text-xl font-semibold mb-2 text-gray-500">Welcome to Focus Music Player</h2>
+                    <h2 class="text-xl font-semibold mb-2 text-gray-300">Welcome to Nohmaloh</h2>
                     <p class="mb-4 text-gray-400">Select a song from your library to start listening</p>
-                    <p class="text-sm text-gray-400">
+                    <p class="text-sm text-gray-500">
                         Click Focus Mode to transform any song for better concentration
                     </p>
                 </div>
@@ -101,8 +290,8 @@
                     </div>
 
                     <!-- Song info -->
-                    <h2 id="song-title" class="text-2xl font-bold text-gray-900 mb-2"></h2>
-                    <p id="song-artist" class="text-lg text-gray-600 mb-6"></p>
+                    <h2 id="song-title" class="text-2xl font-bold text-white mb-2"></h2>
+                    <p id="song-artist" class="text-lg text-gray-300 mb-6"></p>
 
                     <!-- Focus Button -->
                     <button onclick="showFocusMode()" class="inline-flex items-center px-6 py-3 focus-button text-white font-semibold rounded-lg shadow-lg">
@@ -117,16 +306,16 @@
     </main>
 
     <!-- Bottom Player Controls -->
-    <div class="bg-white border-t border-gray-200 p-6">
+    <div class="glass-effect border-t border-gray-200 p-6 fixed bottom-0 left-0 w-full z-50">
         <div id="player-controls" style="display: none;">
             <div class="flex items-center justify-between">
                 <div class="flex items-center space-x-4">
-                    <button id="play-button" onclick="togglePlayPause()" class="p-2 text-gray-600 hover:text-gray-900 rounded-lg hover:bg-gray-100 transition-colors">
+                    <button id="play-button" onclick="togglePlayPause()" class="p-2 text-gray-300 hover:text-white rounded-lg control-button">
                         <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
                             <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd"/>
                         </svg>
                     </button>
-                    <button onclick="stopAudio()" class="p-2 text-gray-600 hover:text-gray-900 rounded-lg hover:bg-gray-100 transition-colors">
+                    <button onclick="stopAudio()" class="p-2 text-gray-300 hover:text-white rounded-lg control-button">
                         <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
                             <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8 7a1 1 0 00-1 1v4a1 1 0 001 1h1a1 1 0 001-1V8a1 1 0 00-1-1H8zM12 7a1 1 0 00-1 1v4a1 1 0 001 1h1a1 1 0 001-1V8a1 1 0 00-1-1h-1z" clip-rule="evenodd"/>
                         </svg>
@@ -134,17 +323,17 @@
                 </div>
                 
                 <div class="flex-1 mx-8">
-                    <div class="bg-gray-200 rounded-full h-2 cursor-pointer" onclick="seekTo(event)">
-                        <div id="progress-bar" class="bg-blue-600 h-2 rounded-full transition-all duration-100" style="width: 0%"></div>
+                    <div class="progress-bar-bg rounded-full h-2 cursor-pointer" onclick="seekTo(event)">
+                        <div id="progress-bar" class="progress-bar-fill h-2 rounded-full transition-all duration-100" style="width: 0%"></div>
                     </div>
-                    <div class="flex justify-between text-xs text-gray-500 mt-1">
+                    <div class="flex justify-between text-xs text-gray-400 mt-1">
                         <span id="current-time">0:00</span>
                         <span id="total-time">0:00</span>
                     </div>
                 </div>
                 
                 <div class="flex items-center space-x-2">
-                    <span class="text-sm text-gray-600">Volume</span>
+                    <span class="text-sm text-gray-300">Volume</span>
                     <input type="range" class="w-20" min="0" max="100" value="70" oninput="setVolume(this.value)">
                 </div>
             </div>
@@ -153,14 +342,14 @@
 
     <!-- Focus Mode Modal -->
     <div id="focus-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50" style="display: none;">
-        <div class="bg-white rounded-lg p-8 max-w-md w-full mx-4">
-            <h3 class="text-xl font-bold mb-6">Focus Mode Settings</h3>
+        <div class="glass-effect rounded-lg p-8 max-w-md w-full mx-4">
+            <h3 class="text-xl font-bold mb-6 text-white">Focus Mode Settings</h3>
             
             <div class="space-y-6">
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-2">Focus Intensity</label>
+                    <label class="block text-sm font-medium text-gray-300 mb-2">Focus Intensity</label>
                     <input type="range" id="focus-intensity" class="w-full" min="0" max="100" value="50">
-                    <div class="flex justify-between text-xs text-gray-500 mt-1">
+                    <div class="flex justify-between text-xs text-gray-400 mt-1">
                         <span>Subtle</span>
                         <span id="intensity-value">50%</span>
                         <span>Strong</span>
@@ -168,14 +357,14 @@
                 </div>
                 
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-2">Target BPM (Optional)</label>
-                    <input type="number" id="target-bpm" class="w-full border border-gray-300 rounded-lg px-3 py-2" placeholder="e.g., 80" min="30" max="200">
-                    <p class="text-xs text-gray-500 mt-1">Leave empty for automatic tempo</p>
+                    <label class="block text-sm font-medium text-gray-300 mb-2">Target BPM (Optional)</label>
+                    <input type="number" id="target-bpm" class="w-full border border-gray-600 bg-gray-800 text-white rounded-lg px-3 py-2" placeholder="e.g., 80" min="30" max="200">
+                    <p class="text-xs text-gray-400 mt-1">Leave empty for automatic tempo</p>
                 </div>
                 
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-2">Preset</label>
-                    <select id="preset" class="w-full border border-gray-300 rounded-lg px-3 py-2">
+                    <label class="block text-sm font-medium text-gray-300 mb-2">Preset</label>
+                    <select id="preset" class="w-full border border-gray-600 bg-gray-800 text-white rounded-lg px-3 py-2">
                         <option value="study">Study Mode</option>
                         <option value="work">Work Mode</option>
                         <option value="meditation">Meditation Mode</option>
@@ -185,7 +374,7 @@
             </div>
             
             <div class="flex space-x-4 mt-8">
-                <button onclick="hideFocusMode()" class="flex-1 bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold py-2 px-4 rounded-lg transition-colors">
+                <button onclick="hideFocusMode()" class="flex-1 bg-gray-600 hover:bg-gray-700 text-white font-semibold py-2 px-4 rounded-lg transition-colors">
                     Cancel
                 </button>
                 <button onclick="startFocusProcessing()" class="flex-1 focus-button text-white font-semibold py-2 px-4 rounded-lg">
