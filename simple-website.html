@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Focus Music Player</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .album-art {
+            background: linear-gradient(135deg, #3B82F6, #1D4ED8);
+        }
+        .focus-button {
+            background: linear-gradient(135deg, #3B82F6, #1D4ED8);
+            transition: all 0.2s ease;
+        }
+        .focus-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(59, 130, 246, 0.3);
+        }
+    </style>
+</head>
+<body class="bg-gray-100 min-h-screen">
+    <!-- Header -->
+    <header class="bg-white shadow-sm border-b border-gray-200 px-6 py-4">
+        <div class="flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+                <div class="w-8 h-8 bg-blue-500 rounded-lg flex items-center justify-center">
+                    <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M9.383 3.076A1 1 0 0110 4v12a1 1 0 01-1.707.707L4.586 13H2a1 1 0 01-1-1V8a1 1 0 011-1h2.586l3.707-3.707a1 1 0 011.09-.217zM15.657 6.343a1 1 0 011.414 0A9.972 9.972 0 0119 12a9.972 9.972 0 01-1.929 5.657 1 1 0 11-1.414-1.414A7.971 7.971 0 0017 12a7.971 7.971 0 00-1.343-4.243 1 1 0 010-1.414z" clip-rule="evenodd"/>
+                    </svg>
+                </div>
+                <div>
+                    <h1 class="text-xl font-bold text-gray-900">Focus Music Player</h1>
+                    <p class="text-sm text-gray-600">Transform your music for better focus</p>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-1 flex overflow-hidden">
+        <!-- Left Sidebar - Music Library -->
+        <div class="w-1/2 lg:w-2/5 xl:w-1/3 bg-white border-r border-gray-200 flex flex-col">
+            <div class="p-6 border-b border-gray-200">
+                <h2 class="text-lg font-semibold text-gray-900 mb-4">Your Music Library</h2>
+                <button class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg transition-colors">
+                    Scan Music Library
+                </button>
+            </div>
+            
+            <div class="flex-1 overflow-y-auto p-6">
+                <!-- Sample songs -->
+                <div class="space-y-3">
+                    <div class="p-4 bg-gray-50 rounded-lg cursor-pointer hover:bg-gray-100 transition-colors" onclick="selectSong('colormein.mp3', 'Color Me In', 'Unknown Artist')">
+                        <h3 class="font-medium text-gray-900">Color Me In</h3>
+                        <p class="text-sm text-gray-600">Unknown Artist</p>
+                        <p class="text-xs text-gray-500">MP3 • 3:45</p>
+                    </div>
+                    
+                    <div class="p-4 bg-gray-50 rounded-lg cursor-pointer hover:bg-gray-100 transition-colors" onclick="selectSong('makeyoumine.mp3', 'Make You Mine', 'Unknown Artist')">
+                        <h3 class="font-medium text-gray-900">Make You Mine</h3>
+                        <p class="text-sm text-gray-600">Unknown Artist</p>
+                        <p class="text-xs text-gray-500">MP3 • 4:12</p>
+                    </div>
+                    
+                    <div class="p-4 bg-gray-50 rounded-lg cursor-pointer hover:bg-gray-100 transition-colors" onclick="selectSong('stay.mp3', 'Stay', 'Unknown Artist')">
+                        <h3 class="font-medium text-gray-900">Stay</h3>
+                        <p class="text-sm text-gray-600">Unknown Artist</p>
+                        <p class="text-xs text-gray-500">MP3 • 2:58</p>
+                    </div>
+                    
+                    <div class="p-4 bg-gray-50 rounded-lg cursor-pointer hover:bg-gray-100 transition-colors" onclick="selectSong('vivalavida.mp3', 'Viva La Vida', 'Coldplay')">
+                        <h3 class="font-medium text-gray-900">Viva La Vida</h3>
+                        <p class="text-sm text-gray-600">Coldplay</p>
+                        <p class="text-xs text-gray-500">MP3 • 4:01</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Panel - Player -->
+        <div class="flex-1 flex flex-col">
+            <div class="flex-1 flex items-center justify-center bg-gradient-to-br from-gray-50 to-gray-100 p-8">
+                <div id="no-song-selected" class="text-center">
+                    <svg class="w-24 h-24 mx-auto mb-4 text-gray-300" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M9.383 3.076A1 1 0 0110 4v12a1 1 0 01-1.707.707L4.586 13H2a1 1 0 01-1-1V8a1 1 0 011-1h2.586l3.707-3.707a1 1 0 011.09-.217zM15.657 6.343a1 1 0 011.414 0A9.972 9.972 0 0119 12a9.972 9.972 0 01-1.929 5.657 1 1 0 11-1.414-1.414A7.971 7.971 0 0017 12a7.971 7.971 0 00-1.343-4.243 1 1 0 010-1.414z" clip-rule="evenodd"/>
+                    </svg>
+                    <h2 class="text-xl font-semibold mb-2 text-gray-500">Welcome to Focus Music Player</h2>
+                    <p class="mb-4 text-gray-400">Select a song from your library to start listening</p>
+                    <p class="text-sm text-gray-400">
+                        Click Focus Mode to transform any song for better concentration
+                    </p>
+                </div>
+
+                <div id="song-selected" class="text-center max-w-md mx-auto" style="display: none;">
+                    <!-- Large album art placeholder -->
+                    <div class="w-48 h-48 mx-auto mb-6 album-art rounded-2xl shadow-2xl flex items-center justify-center transform transition-transform duration-300 hover:scale-105">
+                        <svg class="w-24 h-24 text-white opacity-80" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M9.383 3.076A1 1 0 0110 4v12a1 1 0 01-1.707.707L4.586 13H2a1 1 0 01-1-1V8a1 1 0 011-1h2.586l3.707-3.707a1 1 0 011.09-.217zM15.657 6.343a1 1 0 011.414 0A9.972 9.972 0 0119 12a9.972 9.972 0 01-1.929 5.657 1 1 0 11-1.414-1.414A7.971 7.971 0 0017 12a7.971 7.971 0 00-1.343-4.243 1 1 0 010-1.414z" clip-rule="evenodd"/>
+                        </svg>
+                    </div>
+
+                    <!-- Song info -->
+                    <h2 id="song-title" class="text-2xl font-bold text-gray-900 mb-2"></h2>
+                    <p id="song-artist" class="text-lg text-gray-600 mb-6"></p>
+
+                    <!-- Focus Button -->
+                    <button onclick="showFocusMode()" class="inline-flex items-center px-6 py-3 focus-button text-white font-semibold rounded-lg shadow-lg">
+                        <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M11.49 3.17c-.38-1.56-2.6-1.56-2.98 0a1.532 1.532 0 01-2.286.948c-1.372-.836-2.942.734-2.106 2.106.54.886.061 2.042-.947 2.287-1.561.379-1.561 2.6 0 2.978a1.532 1.532 0 01.947 2.287c-.836 1.372.734 2.942 2.106 2.106a1.532 1.532 0 012.287.947c.379 1.561 2.6 1.561 2.978 0a1.533 1.533 0 012.287-.947c1.372.836 2.942-.734 2.106-2.106a1.533 1.533 0 01.947-2.287c1.561-.379 1.561-2.6 0-2.978a1.532 1.532 0 01-.947-2.287c.836-1.372-.734-2.942-2.106-2.106a1.532 1.532 0 01-2.287-.947zM10 13a3 3 0 100-6 3 3 0 000 6z" clip-rule="evenodd"/>
+                        </svg>
+                        Focus Mode
+                    </button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Bottom Player Controls -->
+    <div class="bg-white border-t border-gray-200 p-6">
+        <div id="player-controls" style="display: none;">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-4">
+                    <button id="play-button" onclick="togglePlayPause()" class="p-2 text-gray-600 hover:text-gray-900 rounded-lg hover:bg-gray-100 transition-colors">
+                        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd"/>
+                        </svg>
+                    </button>
+                    <button onclick="stopAudio()" class="p-2 text-gray-600 hover:text-gray-900 rounded-lg hover:bg-gray-100 transition-colors">
+                        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8 7a1 1 0 00-1 1v4a1 1 0 001 1h1a1 1 0 001-1V8a1 1 0 00-1-1H8zM12 7a1 1 0 00-1 1v4a1 1 0 001 1h1a1 1 0 001-1V8a1 1 0 00-1-1h-1z" clip-rule="evenodd"/>
+                        </svg>
+                    </button>
+                </div>
+                
+                <div class="flex-1 mx-8">
+                    <div class="bg-gray-200 rounded-full h-2 cursor-pointer" onclick="seekTo(event)">
+                        <div id="progress-bar" class="bg-blue-600 h-2 rounded-full transition-all duration-100" style="width: 0%"></div>
+                    </div>
+                    <div class="flex justify-between text-xs text-gray-500 mt-1">
+                        <span id="current-time">0:00</span>
+                        <span id="total-time">0:00</span>
+                    </div>
+                </div>
+                
+                <div class="flex items-center space-x-2">
+                    <span class="text-sm text-gray-600">Volume</span>
+                    <input type="range" class="w-20" min="0" max="100" value="70" oninput="setVolume(this.value)">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Focus Mode Modal -->
+    <div id="focus-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50" style="display: none;">
+        <div class="bg-white rounded-lg p-8 max-w-md w-full mx-4">
+            <h3 class="text-xl font-bold mb-6">Focus Mode Settings</h3>
+            
+            <div class="space-y-6">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Focus Intensity</label>
+                    <input type="range" id="focus-intensity" class="w-full" min="0" max="100" value="50">
+                    <div class="flex justify-between text-xs text-gray-500 mt-1">
+                        <span>Subtle</span>
+                        <span id="intensity-value">50%</span>
+                        <span>Strong</span>
+                    </div>
+                </div>
+                
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Target BPM (Optional)</label>
+                    <input type="number" id="target-bpm" class="w-full border border-gray-300 rounded-lg px-3 py-2" placeholder="e.g., 80" min="30" max="200">
+                    <p class="text-xs text-gray-500 mt-1">Leave empty for automatic tempo</p>
+                </div>
+                
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Preset</label>
+                    <select id="preset" class="w-full border border-gray-300 rounded-lg px-3 py-2">
+                        <option value="study">Study Mode</option>
+                        <option value="work">Work Mode</option>
+                        <option value="meditation">Meditation Mode</option>
+                        <option value="custom">Custom</option>
+                    </select>
+                </div>
+            </div>
+            
+            <div class="flex space-x-4 mt-8">
+                <button onclick="hideFocusMode()" class="flex-1 bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold py-2 px-4 rounded-lg transition-colors">
+                    Cancel
+                </button>
+                <button onclick="startFocusProcessing()" class="flex-1 focus-button text-white font-semibold py-2 px-4 rounded-lg">
+                    Start Processing
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentSong = null;
+        let audio = null;
+        let isPlaying = false;
+        let currentTime = 0;
+        let duration = 0;
+
+        function selectSong(filename, title, artist) {
+            currentSong = { filename, title, artist };
+            
+            // Update UI
+            document.getElementById('no-song-selected').style.display = 'none';
+            document.getElementById('song-selected').style.display = 'block';
+            document.getElementById('player-controls').style.display = 'block';
+            
+            document.getElementById('song-title').textContent = title;
+            document.getElementById('song-artist').textContent = artist;
+            
+            // Update header
+            document.querySelector('header p').textContent = 'Now Playing';
+            
+            // Load the audio file
+            loadAudio(filename);
+        }
+
+        function loadAudio(filename) {
+            // Stop current audio if playing
+            if (audio) {
+                audio.pause();
+                audio = null;
+            }
+            
+            // Create new audio element
+            audio = new Audio(`music/${filename}`);
+            
+            // Set up event listeners
+            audio.addEventListener('loadedmetadata', function() {
+                duration = audio.duration;
+                updateTimeDisplay(0, duration);
+            });
+            
+            audio.addEventListener('timeupdate', function() {
+                currentTime = audio.currentTime;
+                updateTimeDisplay(currentTime, duration);
+                updateProgressBar(currentTime, duration);
+            });
+            
+            audio.addEventListener('ended', function() {
+                isPlaying = false;
+                updatePlayButton();
+                currentTime = 0;
+                updateTimeDisplay(0, duration);
+                updateProgressBar(0, duration);
+            });
+            
+            audio.addEventListener('error', function(e) {
+                console.error('Error loading audio:', e);
+                alert('Error loading audio file. Make sure the music files are in the music/ folder.');
+            });
+        }
+
+        function togglePlayPause() {
+            if (!audio) return;
+            
+            if (isPlaying) {
+                audio.pause();
+                isPlaying = false;
+            } else {
+                audio.play().then(() => {
+                    isPlaying = true;
+                }).catch(e => {
+                    console.error('Error playing audio:', e);
+                    alert('Error playing audio. Make sure the music files are accessible.');
+                });
+            }
+            updatePlayButton();
+        }
+
+        function stopAudio() {
+            if (audio) {
+                audio.pause();
+                audio.currentTime = 0;
+                isPlaying = false;
+                updatePlayButton();
+                updateTimeDisplay(0, duration);
+                updateProgressBar(0, duration);
+            }
+        }
+
+        function updatePlayButton() {
+            const playButton = document.querySelector('#play-button svg');
+            if (isPlaying) {
+                // Show pause icon
+                playButton.innerHTML = '<path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8 7a1 1 0 00-1 1v4a1 1 0 001 1h1a1 1 0 001-1V8a1 1 0 00-1-1H8zM12 7a1 1 0 00-1 1v4a1 1 0 001 1h1a1 1 0 001-1V8a1 1 0 00-1-1h-1z" clip-rule="evenodd"/>';
+            } else {
+                // Show play icon
+                playButton.innerHTML = '<path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd"/>';
+            }
+        }
+
+        function updateTimeDisplay(current, total) {
+            const currentMinutes = Math.floor(current / 60);
+            const currentSeconds = Math.floor(current % 60);
+            const totalMinutes = Math.floor(total / 60);
+            const totalSeconds = Math.floor(total % 60);
+            
+            document.querySelector('#current-time').textContent = 
+                `${currentMinutes}:${currentSeconds.toString().padStart(2, '0')}`;
+            document.querySelector('#total-time').textContent = 
+                `${totalMinutes}:${totalSeconds.toString().padStart(2, '0')}`;
+        }
+
+        function updateProgressBar(current, total) {
+            const percentage = total > 0 ? (current / total) * 100 : 0;
+            document.querySelector('#progress-bar').style.width = percentage + '%';
+        }
+
+        function seekTo(event) {
+            if (!audio || !duration) return;
+            
+            const progressContainer = event.currentTarget;
+            const rect = progressContainer.getBoundingClientRect();
+            const clickX = event.clientX - rect.left;
+            const percentage = clickX / rect.width;
+            const newTime = percentage * duration;
+            
+            audio.currentTime = newTime;
+        }
+
+        function setVolume(value) {
+            if (audio) {
+                audio.volume = value / 100;
+            }
+        }
+
+        function showFocusMode() {
+            document.getElementById('focus-modal').style.display = 'flex';
+        }
+
+        function hideFocusMode() {
+            document.getElementById('focus-modal').style.display = 'none';
+        }
+
+        function startFocusProcessing() {
+            const intensity = document.getElementById('focus-intensity').value;
+            const targetBpm = document.getElementById('target-bpm').value;
+            const preset = document.getElementById('preset').value;
+            
+            // Show processing simulation
+            showProcessingModal(intensity, targetBpm, preset);
+            hideFocusMode();
+        }
+
+        function showProcessingModal(intensity, targetBpm, preset) {
+            // Create processing modal
+            const modal = document.createElement('div');
+            modal.id = 'processing-modal';
+            modal.className = 'fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50';
+            modal.innerHTML = `
+                <div class="bg-white rounded-lg p-8 max-w-md w-full mx-4">
+                    <h3 class="text-xl font-bold mb-6">Processing Focus Mode</h3>
+                    
+                    <div class="space-y-4">
+                        <div class="text-center">
+                            <div class="w-16 h-16 mx-auto mb-4 bg-blue-100 rounded-full flex items-center justify-center">
+                                <svg class="w-8 h-8 text-blue-600 animate-spin" fill="none" viewBox="0 0 24 24">
+                                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                </svg>
+                            </div>
+                            <p class="text-gray-600 mb-2">AI is processing your song...</p>
+                            <p class="text-sm text-gray-500">This may take 1-3 minutes</p>
+                        </div>
+                        
+                        <div class="space-y-2">
+                            <div class="flex justify-between text-sm">
+                                <span>Intensity: ${intensity}%</span>
+                                <span>Preset: ${preset}</span>
+                            </div>
+                            <div class="flex justify-between text-sm">
+                                <span>Target BPM: ${targetBpm || 'Auto'}</span>
+                                <span>Song: ${currentSong ? currentSong.title : 'Unknown'}</span>
+                            </div>
+                        </div>
+                        
+                        <div class="bg-gray-200 rounded-full h-2">
+                            <div id="processing-progress" class="bg-blue-600 h-2 rounded-full transition-all duration-500" style="width: 0%"></div>
+                        </div>
+                        <p id="processing-status" class="text-sm text-gray-600 text-center">Initializing AI processing...</p>
+                    </div>
+                    
+                    <div class="mt-6 flex justify-center">
+                        <button onclick="cancelProcessing()" class="px-6 py-2 bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold rounded-lg transition-colors">
+                            Cancel
+                        </button>
+                    </div>
+                </div>
+            `;
+            
+            document.body.appendChild(modal);
+            
+            // Simulate processing steps
+            simulateProcessing();
+        }
+
+        function simulateProcessing() {
+            const steps = [
+                { progress: 10, status: "Analyzing audio structure..." },
+                { progress: 25, status: "Separating vocals from instruments..." },
+                { progress: 45, status: "Applying focus enhancement effects..." },
+                { progress: 65, status: "Adjusting tempo and dynamics..." },
+                { progress: 85, status: "Optimizing audio quality..." },
+                { progress: 100, status: "Finalizing focus version..." }
+            ];
+            
+            let currentStep = 0;
+            
+            const processStep = () => {
+                if (currentStep < steps.length) {
+                    const step = steps[currentStep];
+                    document.getElementById('processing-progress').style.width = step.progress + '%';
+                    document.getElementById('processing-status').textContent = step.status;
+                    currentStep++;
+                    setTimeout(processStep, 1500 + Math.random() * 1000); // 1.5-2.5 seconds per step
+                } else {
+                    completeProcessing();
+                }
+            };
+            
+            processStep();
+        }
+
+        function completeProcessing() {
+            const modal = document.getElementById('processing-modal');
+            modal.innerHTML = `
+                <div class="bg-white rounded-lg p-8 max-w-md w-full mx-4 text-center">
+                    <div class="w-16 h-16 mx-auto mb-4 bg-green-100 rounded-full flex items-center justify-center">
+                        <svg class="w-8 h-8 text-green-600" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4 text-green-600">Processing Complete!</h3>
+                    <p class="text-gray-600 mb-6">Your focus-optimized version is ready to play.</p>
+                    
+                    <div class="space-y-3">
+                        <button onclick="playFocusVersion()" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-lg transition-colors">
+                            Play Focus Version
+                        </button>
+                        <button onclick="closeProcessingModal()" class="w-full bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold py-2 px-6 rounded-lg transition-colors">
+                            Close
+                        </button>
+                    </div>
+                </div>
+            `;
+        }
+
+        function playFocusVersion() {
+            closeProcessingModal();
+            
+            if (!audio) {
+                alert('Please select a song first!');
+                return;
+            }
+            
+            // Apply basic focus effects to the current audio
+            applyFocusEffects();
+        }
+
+        function applyFocusEffects() {
+            if (!audio) return;
+            
+            // Create a new audio context for real-time effects
+            const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            const source = audioContext.createMediaElementSource(audio);
+            const gainNode = audioContext.createGain();
+            const filterNode = audioContext.createBiquadFilter();
+            const reverbNode = audioContext.createConvolver();
+            
+            // Configure focus effects
+            const intensity = document.getElementById('focus-intensity').value / 100;
+            
+            // Reduce volume slightly for focus mode
+            gainNode.gain.value = 0.8 + (intensity * 0.2); // 0.8 to 1.0
+            
+            // Apply low-pass filter to reduce high frequencies (less distracting)
+            filterNode.type = 'lowpass';
+            filterNode.frequency.value = 8000 - (intensity * 3000); // 5000-8000 Hz
+            filterNode.Q.value = 1;
+            
+            // Create reverb effect to cover up tempo artifacts
+            createReverbEffect(audioContext, reverbNode, intensity);
+            
+            // Apply tempo reduction (15% slower)
+            audio.playbackRate = 0.85; // 15% slower
+            
+            // Connect the audio nodes with reverb
+            source.connect(filterNode);
+            filterNode.connect(gainNode);
+            gainNode.connect(reverbNode);
+            reverbNode.connect(audioContext.destination);
+            
+            // Show focus mode indicator
+            showFocusModeIndicator();
+            
+            // Play the audio with effects
+            audio.play().then(() => {
+                isPlaying = true;
+                updatePlayButton();
+            }).catch(e => {
+                console.error('Error playing focus audio:', e);
+                alert('Error playing focus audio. Make sure the music files are accessible.');
+            });
+        }
+
+        function createReverbEffect(audioContext, reverbNode, intensity) {
+            // Create a simple reverb impulse response
+            const length = audioContext.sampleRate * 2; // 2 seconds
+            const impulse = audioContext.createBuffer(2, length, audioContext.sampleRate);
+            
+            // Generate reverb impulse response
+            for (let channel = 0; channel < 2; channel++) {
+                const channelData = impulse.getChannelData(channel);
+                for (let i = 0; i < length; i++) {
+                    // Create decaying noise for reverb effect
+                    const decay = Math.pow(1 - i / length, 2);
+                    const noise = (Math.random() * 2 - 1) * decay * (0.1 + intensity * 0.2);
+                    channelData[i] = noise;
+                }
+            }
+            
+            reverbNode.buffer = impulse;
+        }
+
+        function showFocusModeIndicator() {
+            // Add visual indicator that focus mode is active
+            const indicator = document.createElement('div');
+            indicator.id = 'focus-indicator';
+            indicator.className = 'fixed top-4 right-4 bg-green-500 text-white px-4 py-2 rounded-lg shadow-lg z-50';
+            indicator.innerHTML = `
+                <div class="flex items-center space-x-2">
+                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M11.49 3.17c-.38-1.56-2.6-1.56-2.98 0a1.532 1.532 0 01-2.286.948c-1.372-.836-2.942.734-2.106 2.106.54.886.061 2.042-.947 2.287-1.561.379-1.561 2.6 0 2.978a1.532 1.532 0 01.947 2.287c-.836 1.372.734 2.942 2.106 2.106a1.532 1.532 0 012.287.947c.379 1.561 2.6 1.561 2.978 0a1.533 1.533 0 012.287-.947c1.372.836 2.942-.734 2.106-2.106a1.533 1.533 0 01.947-2.287c1.561-.379 1.561-2.6 0-2.978a1.532 1.532 0 01-.947-2.287c.836-1.372-.734-2.942-2.106-2.106a1.532 1.532 0 01-2.287-.947zM10 13a3 3 0 100-6 3 3 0 000 6z" clip-rule="evenodd"/>
+                    </svg>
+                    <div class="flex flex-col">
+                        <span class="text-sm font-semibold">Focus Mode Active</span>
+                        <span class="text-xs opacity-90">15% slower + reverb</span>
+                    </div>
+                    <button onclick="exitFocusMode()" class="ml-2 text-white hover:text-gray-200">×</button>
+                </div>
+            `;
+            document.body.appendChild(indicator);
+        }
+
+        function exitFocusMode() {
+            // Remove focus indicator
+            const indicator = document.getElementById('focus-indicator');
+            if (indicator) {
+                indicator.remove();
+            }
+            
+            // Stop current audio and reload original
+            if (audio && currentSong) {
+                audio.pause();
+                // Reset playback rate to normal
+                audio.playbackRate = 1.0;
+                loadAudio(currentSong.filename);
+            }
+        }
+
+        function cancelProcessing() {
+            closeProcessingModal();
+        }
+
+        function closeProcessingModal() {
+            const modal = document.getElementById('processing-modal');
+            if (modal) {
+                modal.remove();
+            }
+        }
+
+        // Update intensity value display
+        document.getElementById('focus-intensity').addEventListener('input', function() {
+            document.getElementById('intensity-value').textContent = this.value + '%';
+        });
+
+        // Handle preset changes
+        document.getElementById('preset').addEventListener('change', function() {
+            const preset = this.value;
+            const intensitySlider = document.getElementById('focus-intensity');
+            const bpmInput = document.getElementById('target-bpm');
+            
+            switch(preset) {
+                case 'study':
+                    intensitySlider.value = 60;
+                    bpmInput.value = 80;
+                    break;
+                case 'work':
+                    intensitySlider.value = 75;
+                    bpmInput.value = 90;
+                    break;
+                case 'meditation':
+                    intensitySlider.value = 40;
+                    bpmInput.value = 60;
+                    break;
+                case 'custom':
+                    // Don't change values for custom
+                    break;
+            }
+            
+            // Update the intensity display
+            document.getElementById('intensity-value').textContent = intensitySlider.value + '%';
+        });
+
+        // Close modal when clicking outside
+        document.getElementById('focus-modal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                hideFocusMode();
+            }
+        });
+
+        // Keyboard shortcuts
+        document.addEventListener('keydown', function(e) {
+            if (e.code === 'Space' && e.target.tagName !== 'INPUT') {
+                e.preventDefault();
+                togglePlayPause();
+            }
+        });
+    </script>
+</body>
+</html>
